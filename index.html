@@ -188,7 +188,7 @@
 
       </nav>
 
-      <a href="#" class="btn btn-secondary">
+      <a href="#reservation" class="btn btn-secondary">
         <span class="text text-1">Find A Table</span>
 
         <span class="text text-2" aria-hidden="true">Find A Table</span>
@@ -329,8 +329,10 @@
           <h2 class="headline-1 section-title">We Offer Top Notch</h2>
 
           <p class="section-text">
-            Experience the finest flavors and a premium atmosphere in the heart of Addis Ababa near Bole Atlas (Rakan Building). 
-            We deliver exceptionally tasty cuisine alongside an exquisite bar selection of fine wines and premium whiskeys.
+            Experience the finest flavors and a premium atmosphere in the heart of Addis Ababa near Bole Atlas (Rakan
+            Building).
+            We deliver exceptionally tasty cuisine alongside an exquisite bar selection of fine wines and premium
+            whiskeys.
           </p>
 
           <ul class="grid-list">
@@ -432,8 +434,9 @@
             <h2 class="headline-1 section-title">Every Flavor Tells a Story</h2>
 
             <p class="section-text">
-              Our culinary journey is driven by a passion for excellence. We source only the freshest ingredients to create dishes 
-              that are as visually stunning as they are delicious. From traditional favorites to modern fusions, 
+              Our culinary journey is driven by a passion for excellence. We source only the freshest ingredients to
+              create dishes
+              that are as visually stunning as they are delicious. From traditional favorites to modern fusions,
               every plate at Aura Restaurant is a celebration of taste and tradition.
             </p>
 
@@ -721,9 +724,6 @@
       </section>
 
 
-
-
-
       <!-- 
         - #TESTIMONIALS
       -->
@@ -737,7 +737,8 @@
           <ul class="grid-list" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
             <li class="testi-item">
               <p class="label-2 testi-text" style="font-size: var(--fs-4); margin-bottom: 20px;">
-                "I wanted to thank you for inviting me down for that amazing dinner the other night. The food was extraordinary."
+                "I wanted to thank you for inviting me down for that amazing dinner the other night. The food was
+                extraordinary."
               </p>
               <div class="profile" style="display: flex; flex-direction: column; align-items: center;">
                 <img src="./assets/images/testi-avatar.jpg" width="80" height="80" loading="lazy" alt="Abebe Kebede"
@@ -780,7 +781,7 @@
         - #RESERVATION
       -->
 
-      <section class="reservation">
+      <section class="reservation" id="reservation">
         <div class="container">
 
           <div class="form reservation-form bg-black-10">
@@ -926,7 +927,8 @@
 
                 <h3 class="title-2 card-title">Hygienic Food</h3>
 
-                <p class="label-1 card-text">We maintain the highest standards of cleanliness and food safety in every dish.</p>
+                <p class="label-1 card-text">We maintain the highest standards of cleanliness and food safety in every
+                  dish.</p>
 
               </div>
             </li>
@@ -940,7 +942,8 @@
 
                 <h3 class="title-2 card-title">Fresh Environment</h3>
 
-                <p class="label-1 card-text">Relax in our beautifully designed dining area, crafted for a memorable experience.</p>
+                <p class="label-1 card-text">Relax in our beautifully designed dining area, crafted for a memorable
+                  experience.</p>
 
               </div>
             </li>
@@ -954,7 +957,8 @@
 
                 <h3 class="title-2 card-title">Skilled Chefs</h3>
 
-                <p class="label-1 card-text">Our world-class culinary experts use passion and precision to bring you the best flavors.</p>
+                <p class="label-1 card-text">Our world-class culinary experts use passion and precision to bring you the
+                  best flavors.</p>
 
               </div>
             </li>
@@ -968,7 +972,8 @@
 
                 <h3 class="title-2 card-title">Event & Party</h3>
 
-                <p class="label-1 card-text">Celebrate your special moments with us. From grand parties to intimate dinners.</p>
+                <p class="label-1 card-text">Celebrate your special moments with us. From grand parties to intimate
+                  dinners.</p>
 
               </div>
             </li>
@@ -1219,6 +1224,160 @@
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- 
+    - #CHATBOT
+  -->
+  <div class="chatbot-container" id="chatbot">
+    <div class="chatbot-header">
+      <div class="chatbot-info">
+        <img src="./assets/images/Mequ.jpg" width="40" height="40" style="border-radius: 50%; border: 2px solid var(--gold-color, #E4C590);">
+        <div>
+          <p class="chatbot-name">Aura Assistant</p>
+          <p class="chatbot-status">Online</p>
+        </div>
+      </div>
+      <button class="chatbot-close" onclick="toggleChat()"><ion-icon name="close-outline"></ion-icon></button>
+    </div>
+    <div class="chatbot-box" id="chatbox">
+      <div class="chat-msg bot">
+        Welcome to Aura Restaurant! How can I assist you today?
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" placeholder="Type a message..." id="userMsg" onkeypress="if(event.key === 'Enter') sendMsg()">
+      <button onclick="sendMsg()"><ion-icon name="paper-plane-outline"></ion-icon></button>
+    </div>
+  </div>
+
+  <button class="chatbot-toggle" id="chatToggle" onclick="toggleChat()">
+    <ion-icon name="chatbubble-ellipses-outline" id="chatIcon"></ion-icon>
+  </button>
+
+  <style>
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: var(--gold-color, #E4C590);
+      color: var(--black-10, #161718);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .chatbot-toggle:hover { transform: scale(1.1); }
+    .chatbot-container {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      max-height: 500px;
+      background-color: var(--black-10, #161718);
+      border: 1px solid var(--gold-color, #E4C590);
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .chatbot-header {
+      padding: 15px;
+      background-color: var(--black-10, #161718);
+      border-bottom: 1px solid var(--gold-color, #E4C590);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chatbot-info { display: flex; align-items: center; gap: 10px; }
+    .chatbot-name { color: var(--gold-color, #E4C590); font-weight: bold; font-size: 16px; margin: 0; }
+    .chatbot-status { color: #00ff00; font-size: 12px; margin: 0; }
+    .chatbot-close { color: var(--white, #ffffff); font-size: 24px; cursor: pointer; }
+    .chatbot-box {
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 250px;
+      max-height: 350px;
+    }
+    .chat-msg {
+      padding: 10px 15px;
+      border-radius: 8px;
+      max-width: 80%;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .chat-msg.bot { background-color: var(--gold-color, #E4C590); color: var(--black-10, #161718); align-self: flex-start; }
+    .chat-msg.user { background-color: #333; color: white; align-self: flex-end; }
+    .chatbot-input {
+      padding: 10px;
+      display: flex;
+      gap: 5px;
+      border-top: 1px solid #333;
+    }
+    .chatbot-input input {
+      flex-grow: 1;
+      background: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
+    .chatbot-input button { color: var(--gold-color, #E4C590); font-size: 20px; cursor: pointer; }
+  </style>
+
+  <script>
+    function toggleChat() {
+      const container = document.getElementById('chatbot');
+      const icon = document.getElementById('chatIcon');
+      if (container.style.display === 'flex') {
+        container.style.display = 'none';
+        icon.setAttribute('name', 'chatbubble-ellipses-outline');
+      } else {
+        container.style.display = 'flex';
+        icon.setAttribute('name', 'close-outline');
+      }
+    }
+
+    function sendMsg() {
+      const input = document.getElementById('userMsg');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const chatbox = document.getElementById('chatbox');
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.textContent = msg;
+      chatbox.appendChild(userDiv);
+      input.value = '';
+      chatbox.scrollTop = chatbox.scrollHeight;
+
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg bot';
+        
+        let response = "Thank you for your message! Our team will get back to you soon. For immediate bookings, please use our 'Find A Table' button.";
+        if (msg.toLowerCase().includes('menu')) response = "You can view our seasonal menu on the home page. We have Greek Salad, Lasagne, and more!";
+        if (msg.toLowerCase().includes('location') || msg.toLowerCase().includes('where')) response = "We are located at Aura Restaurant, Rakan Building, Cape Verde St, Addis Ababa, Ethiopia.";
+        if (msg.toLowerCase().includes('phone') || msg.toLowerCase().includes('call')) response = "You can reach us at +251 977 24 9999 or +251 977 34 9999.";
+        
+        botDiv.textContent = response;
+        chatbox.appendChild(botDiv);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }, 1000);
+    }
+  </script>
 
 </body>
 
