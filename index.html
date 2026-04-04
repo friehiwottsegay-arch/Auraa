@@ -786,7 +786,7 @@
 
           <div class="form reservation-form bg-black-10">
 
-            <form action="" class="form-left">
+            <form action="javascript:void(0)" class="form-left" id="resForm">
 
               <h2 class="headline-1 text-center">Online Reservation</h2>
 
@@ -1355,6 +1355,11 @@
       const msg = input.value.trim();
       if (!msg) return;
 
+      // Save to admin
+      const chats = JSON.parse(localStorage.getItem('aura_chats') || '[]');
+      chats.push({ msg: msg, time: new Date().toLocaleString() });
+      localStorage.setItem('aura_chats', JSON.stringify(chats));
+
       const chatbox = document.getElementById('chatbox');
       const userDiv = document.createElement('div');
       userDiv.className = 'chat-msg user';
@@ -1377,6 +1382,27 @@
         chatbox.scrollTop = chatbox.scrollHeight;
       }, 1000);
     }
+
+    // Reservation Handling
+    document.getElementById('resForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        person: formData.get('person'),
+        date: formData.get('reservation-date'),
+        time: formData.get('time') || '08:00am',
+        status: 'pending'
+      };
+      
+      const res = JSON.parse(localStorage.getItem('aura_reservations') || '[]');
+      res.push(data);
+      localStorage.setItem('aura_reservations', JSON.stringify(res));
+      
+      alert("Reservation request sent successfully! We will contact you soon.");
+      this.reset();
+    });
   </script>
 
 </body>
