@@ -269,13 +269,16 @@ Our Strength
 alt = icon
 
 Hygienic Food
-Lorem Ipsum is simply dummy printing and typesetting.
+We maintain the highest standards of cleanliness and food safety in every dish.
 
 Fresh Environment
+Relax in our beautifully designed dining area, crafted for a memorable experience.
 
 Skilled Chefs
+Our world-class culinary experts use passion and precision to bring you the best flavors.
 
 Event & Party
+Celebrate your special moments with us. From grand parties to intimate dinners.
 
 
 
