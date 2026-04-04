@@ -246,7 +246,7 @@
 
       const resTable = document.getElementById('resTable');
       resTable.innerHTML = '';
-      data.reservations.reverse().forEach((r) => {
+      data.reservations.forEach((r) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${r.name}</td>
@@ -264,7 +264,7 @@
 
       const chatList = document.getElementById('chatList');
       chatList.innerHTML = '';
-      data.chats.reverse().forEach((c) => {
+      data.chats.forEach((c) => {
         const div = document.createElement('div');
         div.style.marginBottom = '20px';
         div.style.borderBottom = '1px solid #333';
