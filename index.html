@@ -1350,15 +1350,17 @@
       }
     }
 
-    function sendMsg() {
+    async function sendMsg() {
       const input = document.getElementById('userMsg');
       const msg = input.value.trim();
       if (!msg) return;
 
-      // Save to admin
-      const chats = JSON.parse(localStorage.getItem('aura_chats') || '[]');
-      chats.push({ msg: msg, time: new Date().toLocaleString() });
-      localStorage.setItem('aura_chats', JSON.stringify(chats));
+      // Save to PHP Admin
+      await fetch('api.php?action=save_chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ msg: msg, time: new Date().toLocaleString() })
+      });
 
       const chatbox = document.getElementById('chatbox');
       const userDiv = document.createElement('div');
@@ -1384,7 +1386,7 @@
     }
 
     // Reservation Handling
-    document.getElementById('resForm').addEventListener('submit', function(e) {
+    document.getElementById('resForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const formData = new FormData(this);
       const data = {
@@ -1392,16 +1394,23 @@
         phone: formData.get('phone'),
         person: formData.get('person'),
         date: formData.get('reservation-date'),
-        time: formData.get('time') || '08:00am',
-        status: 'pending'
+        time: formData.get('time') || '08:00am'
       };
       
-      const res = JSON.parse(localStorage.getItem('aura_reservations') || '[]');
-      res.push(data);
-      localStorage.setItem('aura_reservations', JSON.stringify(res));
+      // Save to PHP Admin
+      const response = await fetch('api.php?action=save_res', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
       
-      alert("Reservation request sent successfully! We will contact you soon.");
-      this.reset();
+      const result = await response.json();
+      if (result.success) {
+        alert("Reservation request sent successfully! We will contact you soon.");
+        this.reset();
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
     });
   </script>
 
