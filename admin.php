@@ -116,13 +116,58 @@
       background-color: transparent;
       color: var(--gold);
       border: 1px solid var(--gold);
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 8px 16px;
+      border-radius: 6px;
       cursor: pointer;
-      margin-right: 5px;
-      transition: all 0.3s ease;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .btn-action:hover { background-color: var(--gold); color: var(--bg-dark); }
+    .btn-action:hover { 
+      background-color: var(--gold); 
+      color: var(--bg-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(228, 197, 144, 0.3);
+    }
+    .btn-view { border-color: #3498db; color: #3498db; }
+    .btn-view:hover { background-color: #3498db; color: white; border-color: #3498db; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3); }
+    .btn-delete { border-color: #e74c3c; color: #e74c3c; }
+    .btn-delete:hover { background-color: #e74c3c; color: white; border-color: #e74c3c; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3); }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--gold);
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      position: relative;
+    }
+    .modal-close { position: absolute; top: 10px; right: 20px; font-size: 24px; cursor: pointer; color: var(--gold); }
+    .modal-title { font-family: 'Forum', serif; color: var(--gold); margin-bottom: 20px; }
+    .modal-item { margin-bottom: 10px; font-size: 15px; }
+    .modal-label { color: var(--text-muted); font-weight: bold; }
+
 
     .chat-reply-box {
       margin-top: 10px;
@@ -144,6 +189,14 @@
 </head>
 
 <body>
+
+  <div class="modal" id="viewModal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <h2 class="modal-title">Reservation Details</h2>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
   <aside class="sidebar">
     <div class="sidebar-logo">AURA PHP</div>
@@ -255,8 +308,17 @@
           <td>${r.person}</td>
           <td><span class="status-badge ${r.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}">${r.status || 'Pending'}</span></td>
           <td>
-            <button class="btn-action" onclick="handleRes(${r.id}, 'confirmed')">Confirm</button>
-            <button class="btn-action" onclick="deleteRes(${r.id})">Delete</button>
+            <div class="button-group">
+              <button class="btn-action btn-view" onclick="viewRes(${JSON.stringify(r).replace(/"/g, '&quot;')})">
+                <ion-icon name="eye-outline"></ion-icon> View
+              </button>
+              <button class="btn-action" onclick="handleRes(${r.id}, 'confirmed')">
+                <ion-icon name="checkmark-outline"></ion-icon> Confirm
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteRes(${r.id})">
+                <ion-icon name="trash-outline"></ion-icon> Delete
+              </button>
+            </div>
           </td>
         `;
         resTable.appendChild(tr);
@@ -306,6 +368,24 @@
     }
 
     window.showSection = showSection;
+
+    window.viewRes = function(r) {
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div class="modal-item"><span class="modal-label">Name:</span> ${r.name}</div>
+        <div class="modal-item"><span class="modal-label">Phone:</span> ${r.phone}</div>
+        <div class="modal-item"><span class="modal-label">Guests:</span> ${r.person}</div>
+        <div class="modal-item"><span class="modal-label">Date:</span> ${r.date}</div>
+        <div class="modal-item"><span class="modal-label">Time:</span> ${r.time}</div>
+        <div class="modal-item"><span class="modal-label">Status:</span> ${r.status || 'Pending'}</div>
+        <div class="modal-item"><span class="modal-label">Created:</span> ${r.created_at}</div>
+      `;
+      document.getElementById('viewModal').style.display = 'flex';
+    }
+
+    window.closeModal = function() {
+      document.getElementById('viewModal').style.display = 'none';
+    }
 
     loadData();
     setInterval(loadData, 5000); 
